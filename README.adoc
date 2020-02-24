@@ -1,0 +1,16 @@
+= yamori
+
+== About
+General purpose notifier for Slack Incoming Webhook with gRPC interface
+
+== Prerequisites
+TBD
+
+== Usage
+TBD
+
+== Development
+TBD
+
+== License
+TBD
