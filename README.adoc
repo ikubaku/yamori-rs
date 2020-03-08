@@ -9,6 +9,17 @@ TBD
 == Usage
 TBD
 
+== Configuration
+yamori is configurable via configuration files and/or environmental variables(environmental variables override the settings from files).
+
+.Configuration parameters
+|===
+|key |required field? |default value |description
+
+|webhook_url |yes |None |The hook URL to notify to
+|rpc_socket |yes |None |The path to the unix domain socket for listening requests
+|===
+
 == Development
 TBD
 
