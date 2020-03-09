@@ -1031,6 +1031,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "serde_derive"
+version = "1.0.104"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "128f9e303a5a29922045a830221b8f78ec74a5f544944f3d5984f8ec3895ef64"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "serde_json"
 version = "1.0.48"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1733,6 +1744,7 @@ dependencies = [
  "prost",
  "reqwest",
  "serde 1.0.104",
+ "serde_derive",
  "serde_json",
  "tokio",
  "tonic",
