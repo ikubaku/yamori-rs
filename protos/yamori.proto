@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package rpc_yamori;
+
+service Yamori {
+    // Notify with INFO level
+    rpc NotifyInfo (NotifyInfoRequest) returns (NotifyInfoReply);
+}
+
+message NotifyInfoRequest {
+    // INFO level message to send to
+    string text = 1;
+}
+
+message NotifyInfoReply {
+    // null reply
+}
