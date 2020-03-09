@@ -1,34 +1,12 @@
-#[macro_use]
-extern crate serde_derive;
-
-#[macro_use]
-extern crate lazy_static;
-
 use std::sync::Arc;
-use tokio::net::UnixListener;
-use futures::stream::TryStreamExt;
+use tonic::{Request, Response, Status};
+use reqwest;
+use serde_json;
 
 pub mod rpc_yamori {
     tonic::include_proto!("rpc_yamori");
 }
-use rpc_yamori::yamori_server::YamoriServer;
-
-mod settings;
-use settings::Settings;
-
-//mod rpc;
-//use rpc::YamoriRPCServer;
-use tonic::transport::Server;
-
-mod util;
-
-lazy_static! {
-    static ref SETTINGS: Settings = Settings::new().map_err(|err| panic!("Something went wrong while reading the configuration. Aborting. : {:?}", err)).unwrap();
-}
-
-
-//
-use tonic::{Request, Response, Status};
+//use tonic::{Request, Response, Status};
 use rpc_yamori::yamori_server::Yamori;
 use rpc_yamori::{NotifyInfoRequest, NotifyInfoReply};
 #[derive(Debug, Default)]
@@ -67,19 +45,4 @@ async fn send_info_message(hook_url: &str, text: &String) -> Result<(), ()> {
             Err(())
         },
     }
-}
-//
-
-
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut uds = UnixListener::bind(&SETTINGS.rpc_socket)?;
-    let server = YamoriRPCServer { hook_url : Arc::new(&SETTINGS.webhook_url) };
-
-    Server::builder()
-        .add_service(YamoriServer::new(server))
-        .serve_with_incoming(uds.incoming().map_ok(util::UnixStream))
-        .await?;
-
-    Ok(())
 }

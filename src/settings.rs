@@ -2,8 +2,8 @@ use config::{ConfigError, Config, File, Environment};
 
 #[derive(Debug, Deserialize)]
 pub struct Settings {
-    webhook_url: String,
-    rpc_socket: String,
+    pub webhook_url: String,
+    pub rpc_socket: String,
 }
 
 impl Settings {
