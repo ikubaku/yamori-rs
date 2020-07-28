@@ -16,8 +16,8 @@ use rpc_yamori::yamori_server::YamoriServer;
 mod settings;
 use settings::Settings;
 
-//mod rpc;
-//use rpc::YamoriRPCServer;
+mod rpc;
+use rpc::YamoriRPCServer;
 use tonic::transport::Server;
 
 mod util;
@@ -31,10 +31,15 @@ lazy_static! {
 use tonic::{Request, Response, Status};
 use rpc_yamori::yamori_server::Yamori;
 use rpc_yamori::{NotifyInfoRequest, NotifyInfoReply};
+use std::path::Path;
+
+
+/*
 #[derive(Debug, Default)]
 pub struct YamoriRPCServer {
     hook_url: Arc<&'static str>,
 }
+*/
 
 #[tonic::async_trait]
 impl Yamori for YamoriRPCServer {
@@ -73,6 +78,8 @@ async fn send_info_message(hook_url: &str, text: &String) -> Result<(), ()> {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    tokio::fs::create_dir_all(Path::new(&SETTINGS.rpc_socket).parent().unwrap()).await?;
+
     let mut uds = UnixListener::bind(&SETTINGS.rpc_socket)?;
     let server = YamoriRPCServer { hook_url : Arc::new(&SETTINGS.webhook_url) };
 

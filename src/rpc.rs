@@ -11,7 +11,7 @@ use rpc_yamori::yamori_server::Yamori;
 use rpc_yamori::{NotifyInfoRequest, NotifyInfoReply};
 #[derive(Debug, Default)]
 pub struct YamoriRPCServer {
-    hook_url: Arc<&'static str>,
+    pub(crate) hook_url: Arc<&'static str>,
 }
 
 #[tonic::async_trait]
